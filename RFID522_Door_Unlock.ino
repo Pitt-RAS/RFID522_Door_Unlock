@@ -31,16 +31,16 @@
 // set pin assignment variables
 const byte motor_pin_1 = 5;
 const byte motor_pin_2 = 6;
-const byte red_LED_pin = 2;
-const byte green_LED_pin = 3;
-const byte button_pin_1 = 7;
-const byte button_pin_2 = 8;
+const byte red_LED_pin = 3;
+const byte green_LED_pin = 2;
+const byte button_pin_1 = 8;
+const byte button_pin_2 = 7;
 const byte SS_pin = 10;
 const byte RST_pin = 9;
 
 // create operational variables
-int open_duration = 5000;
-int close_duration = 600;
+int open_duration = 4000;
+int close_duration = 300;
 
 boolean match = false;          // initialize card match to false
 boolean programMode = false;	// initialize programming mode to false
@@ -83,7 +83,7 @@ void setup() {
   ShowReaderDetails();	// Show details of PCD - MFRC522 Card Reader details
 
   //Wipe Code if Button Pressed while setup run (powered on) it wipes EEPROM
-  if (!digitalRead(button_pin_1) && !digitalRead(button_pin_2)) {	// when button 1 and 2 are both pressed pin should get low, button connected to ground
+  if (!digitalRead(button_pin_1)) {	// when button 1 and 2 are both pressed pin should get low, button connected to ground
     digitalWrite(red_LED_pin, HIGH);	// Red Led stays on to inform user we are going to wipe
     Serial.println(F("Wipe Button Pressed"));
     Serial.println(F("You have 5 seconds to Cancel"));
@@ -211,7 +211,7 @@ void granted () {
   motorDrive(255); // drive motor to open handle
 
   // pulse green LED
-  for (int x = 0; x <= open_duration / 100; x++) {
+  for (int x = 0; x <= open_duration; x += 100) {
     digitalWrite(green_LED_pin, HIGH);   // Turn on green LED
     delay(50);
     digitalWrite(green_LED_pin, HIGH);   // Turn off green LED
@@ -281,15 +281,12 @@ void ShowReaderDetails() {
 
 ///////////////////////////////////////// Cycle Leds (Program Mode) ///////////////////////////////////
 void cycleLeds() {
-  for (int x = 0; x < 4; x++) {
     digitalWrite(red_LED_pin, LOW); 	// Make sure red LED is off
     digitalWrite(green_LED_pin, HIGH); 	// Make sure green LED is on
     delay(100);
     digitalWrite(red_LED_pin, HIGH); 	// Make sure red LED is on
     digitalWrite(green_LED_pin, LOW); 	// Make sure green LED is off
     delay(100);
-  }
-  digitalWrite(green_LED_pin, HIGH);
 }
 
 //////////////////////////////////////// Normal Mode Led  ///////////////////////////////////
