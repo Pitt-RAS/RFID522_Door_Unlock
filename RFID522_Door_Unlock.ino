@@ -33,8 +33,8 @@ const byte motor_pin_1 = 5;
 const byte motor_pin_2 = 6;
 const byte red_LED_pin = 3;
 const byte green_LED_pin = 2;
-const byte button_pin_1 = 8;
-const byte button_pin_2 = 7;
+const byte button_pin_1 = 7;
+const byte button_pin_2 = 8;
 const byte SS_pin = 10;
 const byte RST_pin = 9;
 
